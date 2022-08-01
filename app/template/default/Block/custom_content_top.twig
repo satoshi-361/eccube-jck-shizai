@@ -1,0 +1,31 @@
+<div class="wrapper">
+    <div class="slide">
+        <div class="wideslider">
+            <ul>
+                <li>
+                    <img src="{{ asset('assets/assets/images/top/01-2.jpg') }}" alt="">
+                </li>
+                <li><img src="{{ asset('assets/assets/images/top/02-2.jpg') }}" alt=""></li>
+                <li><img src="{{ asset('assets/assets/images/top/03-2.jpg') }}" alt=""></li>
+                <li><img src="{{ asset('assets/assets/images/top/04-2.jpg') }}" alt=""></li>
+                <li><img src="{{ asset('assets/assets/images/top/05-2.jpg') }}" alt=""></li>
+            </ul>
+        </div>
+        <!--/.wideslider-->
+    </div>
+</div>
+
+{% set newsRepository = repository('ECCUBE\\Entity\\News') %}
+{% set news = newsRepository.findBy({}, {'publish_date': 'DESC'}, 8, 0) %}
+<div id="information" class="wrapper">
+    <div class="body">
+        <p class="title">information</p>
+        <div class="text">
+            <p class="bold">{{ news[0].publish_date|date('Y.m.d') }}　{{ news[0].title }}</p>
+            <p> {{ news[0].description|length > 60 ? news[0].description|striptags|replace({('&nbsp;'):' '})|slice(0, 60)|raw ~ '...' : news[0].description|raw }} </p>
+        </div>
+        <div class="read_more">
+            <p class="btn_more"><a href="{{ url('homepage')~'user_data/news' }}">お知らせ</a></p>
+        </div>
+    </div>
+</div>

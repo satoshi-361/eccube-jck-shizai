@@ -1,0 +1,146 @@
+@charset "utf-8";
+.itemBox ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.itemBox ul li {
+    display: block;
+    padding: 10px;
+    margin: 15px 1%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #FFF;
+    /* width: 23%; */
+    width: 100%;
+    border: 1px solid #ededed;
+}
+
+.itemBox .item3 {
+    width: 100%;
+}
+
+.itemBox .image,
+.itemBox .itemimg {
+    text-align: center;
+    margin: 0 0 20px 0;
+    padding: 0;
+}
+
+.itemBox .image img,
+.itemBox .itemimg img {
+    max-width: 100%;
+    height: auto;
+}
+
+_:-ms-lang(x)::-ms-backdrop,
+.itemBox .image img,
+_:-ms-lang(x)::-ms-backdrop,
+.itemBox .itemimg img {
+    width: 100%;
+    height: auto;
+}
+
+.itemBox .body {
+    padding: 5px;
+    word-break: break-all;
+}
+
+.itemBox .body .head {
+    width: 100%;
+    font-size: 13px;
+}
+
+
+/*Parts*/
+
+.itemBox .body .price,
+.itemBox .itemprice {
+    font-weight: 700;
+    text-align: right;
+}
+
+.itemBox .body .name,
+.itemBox .body .itemname {
+    font-weight: 700;
+}
+
+.itemBox a {
+    color: #000;
+    text-decoration: none;
+}
+
+.itemBox .image {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #ccc;
+}
+
+em.tax {
+    font-style: normal;
+}
+
+.itemBox .body .name {
+    font-size: 14px;
+    height: 3.5em;
+}
+.itemBox a:hover .body .name, #scene .itemBox a:hover .label {
+    color: red;
+}
+
+.itemBox .body .head .cell.price {
+    text-align: center;
+    font-size: 16px;
+}
+
+.itemBox .body .head .cell.price span.ttl,
+em.tax {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.itemBox .body .head .cell.item-no {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #c0c0c0;
+    padding: 0 5px 5px 5px;
+}
+
+.itemBox .body .head .cell.item-no img {
+  max-width: 70px;
+}
+.itemBox .print img {
+    width: 70px;
+    height: auto;
+    margin: 1px;
+}
+
+@media screen and (max-width: 1200px) {
+    .itemBox ul {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    #ranking .itemBox ul {
+        grid-gap: 50px 0;
+    }
+    .itemBox {
+        margin: 0%;
+    }
+    .itemBox ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .itemBox ul {
+        grid-template-columns: 1fr 1fr;
+    }
+}

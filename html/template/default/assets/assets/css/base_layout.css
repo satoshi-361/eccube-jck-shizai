@@ -1,0 +1,189 @@
+.pagination_wrapper {
+    position: relative;
+    clear: both;
+    overflow: hidden;
+}
+
+.pagination_wrapper ul {
+    position: relative;
+    left: 50%;
+    float: left;
+    list-style: none;
+}
+
+.pagination_wrapper li {
+    position: relative;
+    left: -50%;
+    margin: 0.178em;
+    float: left;
+}
+
+.pagination_wrapper li .current {
+    display: block;
+    color: #fff;
+    /* padding: 2px 10px; */
+    background-color: #131313;
+    border: 1px solid #131313;
+    text-decoration: none;
+}
+
+.pagination_wrapper li a {
+    display: block;
+    color: #262626;
+    padding: 2px 10px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+}
+
+#footer {
+    width: 100%;
+    font-size: 12px;
+    font-weight: 400;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #f5f5f5;
+    padding: 70px 0 40px;
+    text-align: left;
+}
+
+#footer .nav_wrapper {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-justify-content: left;
+    justify-content: space-between;
+    background: #f5f5f5;
+    max-width: 1100px;
+    margin: auto;
+}
+
+
+/*navarea*/
+
+#footer .navarea {
+    width: 700px;
+    padding-right: 40px;
+}
+
+#footer .navarea a {
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #222222;
+    text-decoration: none;
+}
+
+#footer .navarea .sns {
+    float: left;
+    margin-top: 30px;
+}
+
+#footer .navarea .sns img {
+    margin: 0 2px;
+    vertical-align: middle;
+}
+
+#footer .navarea dl {
+    width: 25%;
+    float: left;
+    margin: 0 30px 0 5px;
+}
+
+#footer .navarea dl dt {
+    font-size: 16px;
+    font-weight: 700;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #000;
+}
+
+#footer .navarea dl dd {
+    font-size: 13px;
+    padding-bottom: 3px;
+    margin-left: 0;
+}
+
+
+/*infoarea*/
+
+#footer .infoarea {
+    width: 300px;
+}
+
+#footer .infoarea dt {
+    font-size: 16px;
+    font-weight: 700;
+    padding: 8px 1em;
+    background: #efefef;
+    text-align: center;
+    border-top: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+#footer .infoarea dd {
+    font-size: 12px;
+    font-weight: bold;
+    background: #FFF;
+    padding: 15px;
+    border-bottom: 1px solid #e4e4e4;
+    margin-bottom: 10px;
+    margin-left: 0;
+}
+
+#footer .infoarea dd .sttl {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#footer .infoarea dd img {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#footer .infoarea dd p {
+    margin: 0 !important;
+}
+
+.copy {
+    background: #7c7d7d;
+    color: #FFF;
+    padding: 40px 0;
+    text-align: left;
+    font-size: 12px;
+}
+
+.copy p {
+    max-width: 1100px;
+    margin: auto !important;
+    color: white;
+    text-align: center;
+    font-size: 13px;
+}
+
+@media screen and (max-width: 768px) {
+    #footer .nav_wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    #footer .navarea {
+        text-align: center;
+        width: 80%;
+        margin: auto;
+        padding-right: 0;
+    }
+    #footer .navarea dl {
+        width: 200px;
+        float: none;
+        margin: auto;
+        padding-bottom: 20px;
+    }
+    #footer .navarea .sns {
+        width: 230px;
+        float: none;
+        margin: auto;
+        padding-bottom: 20px;
+    }
+}

@@ -1,0 +1,44 @@
+{% block stylesheet %}
+    <style>
+        .ec-cstm-block {
+            max-width: 1100px;
+            margin: auto;
+            padding: 60px 0;
+        }
+    </style>
+{% endblock %}
+
+{% if Products|length %}
+    <div class="ec-orderBySaleRole ec-cstm-block">
+        <div class="ec-role">
+            <div class="ec-secHeading">
+                <span class="ec-secHeading__en">{{ 'front.order_by_sale.block.topic.topic__en'|trans }}</span>
+                <span class="ec-secHeading__line"></span>
+                <span class="ec-secHeading__ja">{{ 'front.order_by_sale.block.topic.topic__ja'|trans }}</span>
+            </div>
+
+            <div class="itemBox">
+                <ul class="ec-shelfGrid">
+                    {% for Product in Products %}
+                        <li>
+                            <a href="{{ url('product_detail', {'id': Product.id}) }}"  title="{{ Product.name }}">
+                                <p class="print">
+                                    <img src="{{ asset('assets/assets/images/common/brand.svg') }}" alt="">
+                                </p>
+                                <p class="image">
+                                    <img width="500" height="500" src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" class="attachment-medium size-medium" alt="{{ Product.name }}" loading="lazy" /> </p>
+                                <div class="body">
+                                    <p class="name">{{ Product.name }}</p>
+                                    <div class="head">
+                                        <p class="cell item-no"><img src="{{ asset('assets/assets/images/common/review-4.svg') }}"> <span>{{ Product.num_code }}</span></p>
+                                        <p class="cell price"><span class="ttl">商品価格: </span>{{ Product.getPrice02Min|number_format }}<em class="tax">（税込）</em></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endif %}

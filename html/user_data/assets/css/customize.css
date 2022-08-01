@@ -1,0 +1,8 @@
+/* カスタマイズ用CSS */
+.ec-secHeading {
+    font-family: "Hira Kaku Pro", sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 40px;
+    color: black;
+}

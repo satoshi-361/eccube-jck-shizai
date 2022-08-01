@@ -1,0 +1,108 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'front_page' %}
+
+{% set categoryRepository = repository('Eccube\\Entity\\Category') %}
+
+{% block stylesheet %}
+    <style></style>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock javascript %}
+
+{% block main %}
+    <section id="ranking">
+        <h1 class="maintitle"><img src="{{ asset('assets/assets/images/top/ttl_ranking.png') }}" alt="人気ランキング"></h1>
+        <div class="itemBox">
+            <ul>
+                {% for Product in Products if Product.Status.id == constant("Eccube\\Entity\\Master\\ProductStatus::DISPLAY_SHOW") %}
+                <li>
+                    <a href="{{ url('product_detail', {'id': Product.id}) }}"  title="{{ Product.name }}">
+                        <p class="print">
+                            <img src="{{ asset('assets/assets/images/common/brand.svg') }}" alt="">
+                        </p>
+                        <p class="image">
+                            <img width="500" height="500" src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" class="attachment-medium size-medium" alt="{{ Product.name }}" loading="lazy" /> </p>
+                        <div class="body">
+                            <p class="name">{{ Product.name }}</p>
+                            <div class="head">
+                                <p class="cell item-no"><img src="{{ asset('assets/assets/images/common/review-4.svg') }}"> <span>{{ Product.num_code }}</span></p>
+                                <p class="cell price"><span class="ttl">商品価格: </span>{{ Product.getPrice02Min|number_format }}<em class="tax">（税込）</em></p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    <section id="newitem">
+        <h1 class="maintitle"><img src="{{ asset('assets/assets/images/top/ttl_news.png') }}" alt="新着アイテム"></h1>
+        <div class="itemBox">
+            <ul>
+                {% for Product in Products if Product.Status.id == constant("Eccube\\Entity\\Master\\ProductStatus::DISPLAY_SHOW") %}
+                <li>
+                    <a href="{{ url('product_detail', {'id': Product.id}) }}"  title="{{ Product.name }}">
+                        <p class="print">
+                            <img src="{{ asset('assets/assets/images/common/brand.svg') }}" alt="">
+                        </p>
+                        <p class="image">
+                            <img width="500" height="500" src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" class="attachment-medium size-medium" alt="{{ Product.name }}" loading="lazy" /> </p>
+                        <div class="body">
+                            <p class="name">{{ Product.name }}</p>
+                            <div class="head">
+                                <p class="cell item-no"><img src="{{ asset('assets/assets/images/common/review-4.svg') }}"> <span>{{ Product.num_code }}</span></p>
+                                <p class="cell price"><span class="ttl">商品価格: </span>{{ Product.getPrice02Min|number_format }}<em class="tax">（税込）</em></p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <p class="btn_more"><a href="item.html">More view</a></p>
+    </section>
+    <section id="scene">
+        {% set TopCategories = categoryRepository.findOneBy({'name': 'カテゴリー'}).Children %}
+        <h1 class="maintitle"><img src="{{ asset('assets/assets/images/top/ttl_category.png') }}" alt="カテゴリーで探す"></h1>
+        <div class="itemBox category">
+            <ul>
+                {% for Category in TopCategories %}
+                <li>
+                    <a href="" value="{{ Category.id }}">
+                      <p class="image"><img src="{{ asset('assets/assets/images/' ~ Category.image1) }}" alt=""></p>
+                      <p class="label">{{ Category.name }}</p>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    <section id="faq">
+        <h1>よくある質問</h1>
+        <dl class="faq">
+            <dt>モノタロウサイトでの返品申込方法について</dt>
+            <dd>［ご購入履歴］から返品をお申込みください 返品が可能な商品、数量に限り、ＷＥＢサイトからのお申込がご利用いただけます。
+            </dd>
+            <dt>ご返品について</dt>
+            <dd>モノタロウ ブランド商品なら出荷後365日以内の返品OK！ 一年間返品保証マーク モノタロウ ブランド商品 モノタロウ ブランドマーク 返品受付期限 納品書記載の出荷日より 365日 以内 返品をお受けできないもの 納品書記載の出荷日より365日以上経過した商品</dd>
+            <dt>FAXでの返品申込方法について</dt>
+            <dd>返品連絡シートに必要事項を記入の上、FAXしてください 返品連絡 FAX:0120-289-888 返品連絡シート(pdfファイル) ・ 事前にFAXでのご連絡がない場合、返品はお受けいたしかねますのでご了承ください。</dd>
+            <dt>商品交換について/dt>
+            <dd>弊社手配ミス、不良品など弊社理由による場合を除き、交換は承っておりません。 ご不要商品につきましては、返品手続き( ご返品について )をお願いいたします。</dd>
+        </dl>
+        <p class="btn_more"><a href="{{ url('homepage')~'user_data/faq' }}">More view</a></p>
+    </section>
+{% endblock %}

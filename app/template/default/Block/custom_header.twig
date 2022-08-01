@@ -1,0 +1,64 @@
+<div class="wrapper">
+    <header>
+        <div class="header-top">
+            <div>
+                <a class="logo" href="{{ url('homepage') }}">
+                    <p class="pc-only2">外構・エクステリア・建築資材の<br/>一流メーカーを卸価格でご提供</p>
+                    <img src="{{ asset('assets/assets/images/common/logo.svg') }}">
+                </a>
+                <div class="header-mypage">
+                    <div class="pc-only2">
+                        {% if is_granted('ROLE_USER') %}
+                          <a class="btn-login" href="{{ url('logout') }}"><i class="fa fa-sign-out"></i>ログアウト</a>
+                        {% else %}
+                          <a class="btn-login" href="{{ url('mypage_login') }}"><i class="fa fa-sign-in"></i>ロヴイン</a>
+                        {% endif %}
+                        <a class="btn-register" href="{{ url('entry') }}"><i class="fa fa-user"></i>初めてのお客様へ<span>新規登録</span></a>
+                    </div>
+                    <ul>
+                        <li><select><option>マイページ</option></select></li>
+                        <li>
+                            <a href="">定期注文</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('mypage') }}">ご購入履歴</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="header-top-right pc-only">
+                <a href="{{ url("contact") }}">
+                    <i class="fa fa-television"></i>WEB
+                    <p>お問合せ こちらへ</p>
+                </a>
+                <a href="{{ url("help_guide") }}">
+                    <i class="fa fa-question-circle-o"></i>ご利用ガイド
+                    <p>よくあるご質問</p>
+                </a>
+            </div>
+        </div>
+        <div class="header-middle pc-only">
+            <a href=""><img src="{{ asset('assets/assets/images/common/bomb.svg') }}"></a>
+        </div>
+        <div class="header-bottom">
+            <ul>
+                <li class="select pc-only2"><a href=""><span>カテゴリから探す</span></a></li>
+                <li class="break pc-only2"></li>
+                <li class="select pc-only"><a href=""><span>クイックオーダー</span></a></li>
+                <li class="break pc-only"></li>
+                <li>
+                <form method="get" id="searchform" class="searchform" action="{{ path('product_list') }}" role="search">
+                    <center><input type="text" name="name" id="head-s-text" class="search-text" placeholder="商品名、キーワード、商品番号"></p></center>
+                    <p style="display:none"><input type="submit" id="head-s-submit" class="searchsubmit" value="検索"></p>
+                </form>
+                </li>
+                <li class="break pc-onlyt"></li>
+                <li class="select pc-onlyt"><a href="{{ url('cart') }}"><i class="fa fa-shopping-cart"></i><span>バスケット</span></a></li>
+                <li class="break pc-only"></li>
+                <li class="select pc-only"><a href="{{ url('mypage') }}"><span>買ったもの</span></a></li>
+                <li class="break pc-onlyt"></li>
+                <li class="select pc-onlyt"><a href="{{ url('mypage_favorite') }}"><span>お気に入り</span></a></li>
+            </ul>
+        </div>
+    </header>
+</div>

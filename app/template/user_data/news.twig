@@ -1,0 +1,80 @@
+{% extends 'default_frame.twig' %}
+
+{% set newsRepository = repository('ECCUBE\\Entity\\News') %}
+{% set news = newsRepository.findBy({}, {'publish_date': 'DESC'}, 8, 0) %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> 
+<style>
+	.news ul.list {
+			max-width: 1000px;
+			margin: 40px auto;
+	}
+	.news ul.list li {
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			padding: 0 30px 5px;
+	}
+	.news ul.list li .title{
+    padding: 15px 15px 10px 15px;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+	}
+	.news ul.list .date{
+    padding-bottom: 20px;
+    text-align: center;
+    color: #666;
+    font-size: 13px;
+	}
+	.news ul.page_navi {
+		text-align: center;
+	}
+	.news ul.page_navi li {
+    margin: 10px 0 15px 0;
+    background: none;
+    padding: 0;
+    list-style-type: none;
+    display: inline-block;
+    font-weight: 600;
+	}
+	.news ul.page_navi li span {
+    background: #666565;
+    border: 2px solid #666565;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    line-height: 2.5;
+    margin: 0 5px;
+    display: block;
+    -webkit-transition: all 0.9s ease-in-out;
+    -moz-transition: all 0.9s ease-in-out;
+    -o-transition: all 0.9s ease-in-out;
+    transition: all 0.9s ease-in-out;
+	}
+</style>
+{% endblock %}
+
+{% block main %}
+	<div class="ec-contactRole news">
+			<div class="ec-pageHeader">
+          <h1>お知らせ</h1>
+      </div>
+			<ul class="list">
+				{% for item in news %}
+					<li>
+						<p class="title">{{ item.title }}</p>
+						<p class="date">{{ item.publish_date|date('Y.m.d') }}</p>
+						<div class="text">
+							<p>{{ item.description }}</p>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+			<ul class="page_navi">
+					<li class="current"><span>1</span></li>
+			</ul>
+	</div>
+{% endblock %}

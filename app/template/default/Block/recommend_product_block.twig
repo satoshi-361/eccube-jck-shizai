@@ -1,0 +1,34 @@
+{#
+ * This file is part of the Recommend Product plugin
+ *
+ * Copyright (C) EC-CUBE CO.,LTD. All Rights Reserved.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+#}
+{% set recommend_products = repository('Plugin\\Recommend4\\Entity\\RecommendProduct').getRecommendProduct %}
+
+<!-- ▼item_list▼ -->
+<div class="ec-shelfRole">
+    <ul class="ec-shelfGrid">
+        {% for Product in recommend_products %}
+            <li>
+              <a href="{{ url('product_detail', {'id': Product.id}) }}"  title="{{ Product.name }}">
+                  <p class="print">
+                      <img src="{{ asset('assets/assets/images/common/brand.svg') }}" alt="">
+                  </p>
+                  <p class="image">
+                      <img width="500" height="500" src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" class="attachment-medium size-medium" alt="{{ Product.name }}" loading="lazy" /> </p>
+                  <div class="body">
+                      <p class="name">{{ Product.name }}</p>
+                      <div class="head">
+                          <p class="cell item-no"><img src="{{ asset('assets/assets/images/common/review-4.svg') }}"> <span>{{ Product.num_code }}</span></p>
+                          <p class="cell price"><span class="ttl">商品価格: </span>{{ Product.getPrice02Min|number_format }}<em class="tax">（税込）</em></p>
+                      </div>
+                  </div>
+              </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<!-- ▲item_list▲ -->

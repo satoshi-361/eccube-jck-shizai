@@ -1,0 +1,173 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'product_page' %}
+{% set categoryRepository = repository('Eccube\\Entity\\Category') %}
+
+{% block javascript %}
+    <script>
+        eccube.productsClassCategories = {
+            {% for Product in pagination %}
+            "{{ Product.id|escape('js') }}": {{ class_categories_as_json(Product)|raw }}{% if loop.last == false %}, {% endif %}
+            {% endfor %}
+        };
+
+        $(function() {
+
+            // 表示件数を変更
+            $('.disp-number').change(function() {
+                var dispNumber = $(this).val();
+                $('#disp_number').val(dispNumber);
+                $('#pageno').val(1);
+                $("#form1").submit();
+            });
+
+            // 並び順を変更
+            $('.order-by').change(function() {
+                var orderBy = $(this).val();
+                $('#orderby').val(orderBy);
+                $('#pageno').val(1);
+                $("#form1").submit();
+            });
+
+            $('.add-cart').on('click', function(e) {
+                var $form = $(this).parents('li').find('form');
+
+                // 個数フォームのチェック
+                var $quantity = $form.parent().find('.quantity');
+                if ($quantity.val() < 1) {
+                    $quantity[0].setCustomValidity('{{ '1以上で入力してください。'|trans }}');
+                    setTimeout(function() {
+                        loadingOverlay('hide');
+                    }, 100);
+                    return true;
+                } else {
+                    $quantity[0].setCustomValidity('');
+                }
+                e.preventDefault();
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: $form.attr('method'),
+                    data: $form.serialize(),
+                    dataType: 'json',
+                    beforeSend: function(xhr, settings) {
+                        // Buttonを無効にする
+                        $('.add-cart').prop('disabled', true);
+                    }
+                }).done(function(data) {
+                    // レスポンス内のメッセージをalertで表示
+                    $.each(data.messages, function() {
+                        $('#ec-modal-header').html(this);
+                    });
+
+                    $('.ec-modal').show()
+
+                    // カートブロックを更新する
+                    $.ajax({
+                        url: '{{ url('block_cart') }}',
+                        type: 'GET',
+                        dataType: 'html'
+                    }).done(function(html) {
+                        $('.ec-headerRole__cart').html(html);
+                    });
+                }).fail(function(data) {
+                    alert('{{ 'カートへの追加に失敗しました。'|trans }}');
+                }).always(function(data) {
+                    // Buttonを有効にする
+                    $('.add-cart').prop('disabled', false);
+                });
+            });
+        });
+
+        $('.ec-modal-wrap').on('click', function(e) {
+            // モーダル内の処理は外側にバブリングさせない
+            e.stopPropagation();
+        });
+        $('.ec-modal-overlay, .ec-modal, .ec-modal-close, .ec-inlineBtn--cancel').on('click', function() {
+            $('.ec-modal').hide()
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div id="category-product-list">
+            <div class="tabs">
+                <div id="tab3" class="nav">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a href="#tab1"><img src="{{ asset('assets/assets/images/common/category_icon.svg') }}">カテゴリ一覧<span class="pc-only">＜モール以下のカテゴリです</span></a>
+                        </li>
+                        <li>
+                            <a href="#tab2"><img src="{{ asset('assets/assets/images/common/product_icon.svg') }}">商品一覧<span class="pc-only">＜モール以下の商品はこちらから</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="tab1" class="tab">
+              <div>
+                {% set TopCategory = categoryRepository.findOneBy({'name': 'カテゴリー'}) %}
+                {% for ChildCategory1 in TopCategory.Children %}
+                  <div class="category-block">
+                      <a href="{{ url('category02', {id: ChildCategory1.id}) }}" class="category-block-name" value="{{ ChildCategory1.id }}">{{ ChildCategory1.name }}</a>
+                      <ul>
+                      {% for ChildCategory2 in ChildCategory1.Children %}
+                        <li><a href="{{ url('category02', {id: ChildCategory2.id}) }}" class="" value="{{ ChildCategory2.id }}">{{ ChildCategory2.name }}</a></li>
+                      {% endfor %}
+                      </ul>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div id="tab2" class="tab">
+                <form name="form1" id="form1" method="get" action="?">
+                    {% for item in search_form %}
+                        <input type="hidden" id="{{ item.vars.id }}"
+                            name="{{ item.vars.full_name }}"
+                              {% if item.vars.value is not empty %}value="{{ item.vars.value }}" {% endif %}/>
+                    {% endfor %}
+                </form>
+                {% if pagination.totalItemCount > 0 %}
+                    <div class="sort_head" style="text-align: right; padding-right: 30px">
+                        {{ form_widget(disp_number_form, {'id': '', 'attr': {'class': 'disp-number'}}) }}
+                        {{ form_widget(order_by_form, {'id': '', 'attr': {'class': 'order-by'}}) }}
+                    </div>
+                {% endif %}
+                <div class="itemBox">
+                    <ul>
+                      {% if pagination.totalItemCount > 0 %}
+                        {% for Product in pagination if Product.Status.id == constant("Eccube\\Entity\\Master\\ProductStatus::DISPLAY_SHOW") %}
+                        <li>
+                            <a href="{{ url('product_detail', {'id': Product.id}) }}"  title="{{ Product.name }}">
+                                <p class="print">
+                                    <img src="{{ asset('assets/assets/images/common/brand.svg') }}" alt="">
+                                </p>
+                                <p class="image">
+                                    <img width="500" height="500" src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" class="attachment-medium size-medium" alt="{{ Product.name }}" loading="lazy" /> </p>
+                                <div class="body">
+                                    <p class="name">{{ Product.name }}</p>
+                                    <div class="head">
+                                        <p class="cell item-no"><img src="{{ asset('assets/assets/images/common/review-4.svg') }}"> <span>{{ Product.num_code }}</span></p>
+                                        <p class="cell price"><span class="ttl">商品価格: </span>{{ Product.getPrice02Min|number_format }}<em class="tax">（税込）</em></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                      {% endif %}
+                    </ul>
+                </div>
+                <div class="pagination_wrapper">
+                    {% include "pager.twig" with {'pages': pagination.paginationData} %}
+                </div>
+            </div>
+    </div>
+{% endblock %}

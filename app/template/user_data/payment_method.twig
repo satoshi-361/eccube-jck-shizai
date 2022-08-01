@@ -1,0 +1,52 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> 
+{% endblock %}
+
+{% block main %}
+    <div class="ec-role">
+        <div class="ec-pageHeader">
+            <h1> {{ 'お支払い方法について'|trans }}</h1>
+        </div>
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                <div class="ec-borderedDefs help">
+                    <dl>
+                      <dt></dt>
+                      <dd>
+                        お支払い方法は複数あります。<br/>それぞれの詳細は下記よりご確認ください。<br/>
+                        ご注文が完了したあとはお支払い方法の変更はできません。<br/>
+                        次回のご注文分からになりますが、まとめてのお支払いに変更希望の方は  「お問合せフォーム」 から<br/>
+                        お問合せの種類「 お支払いについて - 定期振込/口座振替について 」を選択しご連絡ください。
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>一ヶ月まとめてのお支払い</dt>
+                      <dd>
+                      ※締日までのご利用分（出荷商品）をまとめて請求いたします。<br/>
+                      ※ご注文金額が高額になる場合やお取引状況によりましては、都度払いをお願いする場合があります。
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>ご注文都度のお支払い</dt>
+                      <dd>
+                        クレジットカード
+                        楽天銀行注文時支払い
+                        代金引換
+                      </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

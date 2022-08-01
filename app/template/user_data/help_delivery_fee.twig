@@ -1,0 +1,61 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> 
+{% endblock %}
+
+{% block main %}
+    <div class="ec-role">
+        <div class="ec-pageHeader">
+            <h1> {{ '配送料について'|trans }}</h1>
+        </div>
+        <div class="ec-off1Grid">
+            <div class="ec-off1Grid__cell">
+                <div class="ec-borderedDefs help">
+                    <dl>
+                      <dt>1回のご注文が3,500円(税別)以上で配送料無料!</dt>
+                      <dd>
+                      <ul>
+                        <li>
+                          ご注文が3,500円未満（税別・商品代のみ）の場合、配送料500円（税別）を頂戴します。
+                        </li>
+                        <li>キャンペーンコードをご利用の場合は、適用後のご注文金額が3,500円(税別)以上で配送料が無料になります。</li>
+                        <li>クーポン番号をご利用の場合は、適用前のご注文金額が3,500円(税別)以上であれば対象となります。</li>
+                      </ul>
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>【WEB注文限定】同日中の追加注文は金額にかかわらず配送料・代引手数料無料!</dt>
+                      <dd>
+                      <ul>
+                        <li>1回目のご注文の後、同日中のご注文であれば2回目以降のご注文にかかる配送料・代引手数料が無料となるサービスです。</li>
+                        <li>モノタロウサイト（PCサイト・スマホサイト・スマホアプリ）からのご注文に限ります。</li>
+                        <li>個別配送料（地域運賃及び特別運賃）は別途頂戴します。</li>
+                        <li>同日中のご注文合計金額が3,500円(税別)以上であっても1回目のご注文金額が3,500円（税別）未満の場合は、1回目のご注文にかかる配送料・代引手数料は無料となりません。</li>
+                      </ul>
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>地域運賃の配送料</dt>
+                      <dd>「地域運賃」の指定がある商品は、各商品詳細ページに配送料の目安が記載されています。<br/>ご負担いただく配送料はご注文内容確認書でご確認ください。
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt>特別運賃の配送料</dt>
+                      <dd>ご負担いただく特別運賃はご注文内容確認書でご確認ください。
+                      </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

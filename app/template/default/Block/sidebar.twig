@@ -1,0 +1,16 @@
+{% set visible_route = ['homepage', 'product_list', 'category02'] %}
+
+{% if app.request.attributes.get('_route') in visible_route %}
+{{ render(path('block_search_product_by_category')) }}
+{% else %}
+{% block stylesheet %}
+<style>
+    .ec-layoutRole__contents #main-wrapper {
+        width: 100%;
+        margin-top: 30px;
+        padding-left: 0;
+    }
+</style>
+{% endblock %}
+
+{% endif %}

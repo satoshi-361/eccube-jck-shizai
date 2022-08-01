@@ -1,0 +1,78 @@
+{% block javascript %}
+    <script>
+      $(function() {
+        $('#sidebar li a').click(function(e){
+          e.preventDefault();
+
+          $('input[name="category_id"]').val($(this).attr('value'));
+          $('#search_by_category').click();
+        });
+        $('.category a').click(function(e){
+          e.preventDefault();
+
+          $('input[name="category_id"]').val($(this).attr('value'));
+          $('#search_by_category').click();
+        });
+      });
+    </script>
+{% endblock javascript %}
+
+{% set categoryRepository = repository('Eccube\\Entity\\Category') %}
+{% set productRepository = repository('Eccube\\Entity\\Product') %}
+{% set deliveryDurationRepository = repository('Eccube\\Entity\\DeliveryDuration') %}
+
+<main class="wrapper">
+<div id="sidebar">
+    <form method="get" style="display: none" action="{{ url('product_list') }}">
+    <input type="number" name="category_id">
+    <button type="submit" id="search_by_category">
+    </button>
+    </form>
+    <div class="creteria">
+        {% set Category = categoryRepository.findOneBy({'name': 'カテゴリー'}) %}
+        <p class="title">カテゴリ</p>
+        <p class="target-name">すべてのカテゴリ<span><br/>{{ Category.name }}</span></p>
+        <ul>
+            {% for item in Category.Children %}
+              <li><a href="" value="{{ item.id }}"><div><span>{{ item.name }}</span><span class="yellow">{{ item.ProductCategories|length }}</span></div></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="creteria">
+        {% set Brand = categoryRepository.findOneBy({'name': 'ブランド'}) %}
+        <p class="title">ブランド</p>
+        <ul>
+            {% for item in Brand.Children %}
+              <li><a href="" value="{{ item.id }}"><div><span>{{ item.name }}</span><span class="yellow">{{ item.ProductCategories|length }}</span></div></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="creteria">
+        {% set PriceRange = categoryRepository.findOneBy({'name': '価格帯'}) %}
+        <p class="title">価格帯で探す</p>
+        <ul>
+            {% for item in PriceRange.Children|reverse %}
+              <li><a href="" value="{{ item.id }}"><div><span>{{ item.name }}</span><span class="yellow">{{ item.ProductCategories|length }}</span></div></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="creteria">
+        {% set Review = categoryRepository.findOneBy({'name': '商品レビュー'}) %}
+        <p class="title">商品レビュー</p>
+        <ul>
+            {% for item in Review.Children %}
+              <li><a href="" value="{{ item.id }}"><div><span><img src="{{ asset('assets/assets/images/' ~ item.image1) }}">以上</span><span class="yellow">{{ item.ProductCategories|length }}</span></div></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="creteria">
+        {% set DeliveryDuration = categoryRepository.findOneBy({'name': '出荷目安'}) %}
+        <p class="title">出荷目安</p>
+        <select style="margin: 10px 6px 5px">
+            {% for item in deliveryDurationRepository.findAll() %}
+              <option>{{ item.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="hover_panel"></div>

@@ -1,0 +1,76 @@
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'product_page' %}
+{% block javascript %}
+<script>
+  $(function(){
+      $('.disp-number').change(function() {
+          var dispNumber = $(this).val();
+          $('#disp_number').val(dispNumber);
+          $('#pageno').val(1);
+          $("#form1").submit();
+      });
+      
+      // 並び順を変更
+      $('.order-by').change(function() {
+          var orderBy = $(this).val();
+          $('#orderby').val(orderBy);
+          $('#pageno').val(1);
+          $("#form1").submit();
+      });
+  })
+</script>
+{% endblock %}
+{% block main %}
+<div class="category-2">
+  <p class="category-2-title">{{ Category.name }}</p>
+  <p class="category-2-detail">{{ Category.note|nl2br }}</p>
+  <form name="form1" id="form1" method="get" action="?">
+      {% for item in search_form %}
+          <input type="hidden" id="{{ item.vars.id }}"
+              name="{{ item.vars.full_name }}"
+                {% if item.vars.value is not empty %}value="{{ item.vars.value }}" {% endif %}/>
+      {% endfor %}
+  </form>
+  {% if pagination.totalItemCount > 0 %}
+      <div class="sort_head" style="text-align: right; padding-right: 30px">
+          {{ form_widget(disp_number_form, {'id': '', 'attr': {'class': 'disp-number'}}) }}
+          {{ form_widget(order_by_form, {'id': '', 'attr': {'class': 'order-by'}}) }}
+      </div>
+  {% endif %}
+  <ul class="products-list">
+      {% for Product in pagination if Product.Status.id == constant("Eccube\\Entity\\Master\\ProductStatus::DISPLAY_SHOW") %}
+      <li>
+          <div class="image">
+              <a href="{{ url('product_detail', {'id': Product.id}) }}"><img src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" alt=""></a>
+          </div>
+          <div class="hidden">
+              <div class="brand"><img src="{{ asset('assets/assets/images/common/brand.svg') }}"></div>
+              <div class="review"><img src="{{ asset('assets/assets/images/common/review-4.svg') }}"><span>(580件すべてのレビューを見る) カタログ掲載商品</span></div>
+          </div>
+          <div class="detail">
+              <div class="brand"><img src="{{ asset('assets/assets/images/common/brand.svg') }}"></div>
+              <a href="" class="name">{{ Product.name }}</a>
+              <div class="review"><img src="{{ asset('assets/assets/images/common/review-4.svg') }}"><span>(580件すべてのレビューを見る) カタログ掲載商品</span></div>
+              <p class="description">{{ Product.description_detail|raw|nl2br }}</p>
+              <dl>
+                {% for item in Product.additional_product_items|split(';') if item|length > 0 %}
+                    {% set temp = item|split('?')[1] %}
+                    <dt>{{ temp|split(':')[0] }}</dt>
+                    <dd>{{ temp|split(':')[1] }}</dd>
+                {% endfor %}
+              </dl>
+          </div>
+          <div class="extra">
+              <p class="price-no-tax">{{ Product.getPrice02Min|number_format }}円</p>
+              <p class="price-with-tax">税込{{ Product.getPrice02IncTaxMin }}円</p>
+              <div class="delivery"><span>当日出荷</span></div>
+          </div>
+      </li>
+      {% endfor %}
+  </ul>
+  <div class="pagination_wrapper">
+      {% include "pager.twig" with {'pages': pagination.paginationData, 'param_id': Category.id} %}
+  </div>
+</div>
+{% endblock %}
